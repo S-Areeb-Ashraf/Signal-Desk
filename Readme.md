@@ -102,8 +102,6 @@ Run the benchmark locally after installing the requirements:
 python scripts/benchmark.py --rows 10000
 ```
 
-The script prints measured timings for normalization, deduplication, validation, and scoring. Results are intentionally not fabricated here; record the output from your machine in your submission video or README after running it.
-
 ## Limitations and roadmap
 
 - Public-source discovery depends on third-party availability and may return partial results.
@@ -111,26 +109,6 @@ The script prints measured timings for normalization, deduplication, validation,
 - Supabase persistence is intentionally backend-only; the demo remains useful without an account.
 - Future work: authenticated workspaces, background jobs, CRM OAuth integrations, richer website extraction, and source-specific quality calibration.
 
-## Submission files
-
-- `docs/ARCHITECTURE.md` - UX, architecture, data, cache, hosting, and deployment decisions.
-- `docs/BUILD_LOG.md` - planned five-hour build plan; edit with actual time.
-- `VIDEO_SCRIPT.md` - 1:45-2:00 recording script and shot list.
-- `BUSINESS_UNDERSTANDING.md` - draft answers with personal placeholders and `[VERIFY]` markers.
-- `EMAIL_DRAFT.md` - editable submission email.
-- `api_demo.py` - API walkthrough.
-- `supabase/schema.sql` - paste into Supabase SQL Editor.
-
 ## License
 
 MIT for the implementation. OpenStreetMap data, when used, remains subject to the Open Database License (ODbL). The bundled dataset is synthetic.
-
-## Links to complete before submission
-
-- Live demo: [replace with deployed URL]
-- Video walkthrough: [replace with video URL]
-- Screenshots/GIF: add the final capture under `docs/screenshots/` and link it here.
-
-## Self-audit
-
-See `docs/SELF_AUDIT.md` for the rubric score table and remaining user-owned tasks.
