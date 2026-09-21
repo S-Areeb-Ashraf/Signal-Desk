@@ -1,0 +1,16 @@
+# fastapi>=0.117.1,<1
+# uvicorn[standard]>=0.35,<1
+fastapi==0.136.3
+uvicorn[standard]==0.53.0
+pydantic>=2.11,<3
+httpx>=0.28,<1
+python-dotenv>=1.1,<2
+rapidfuzz>=3.13,<4
+phonenumbers>=9.0,<10
+email-validator>=2.2,<3
+# supabase>=2.15,<3
+supabase==2.31.0
+pytest>=8.4,<9
+pytest-asyncio>=1.1,<2
+ruff>=0.12,<1
+mypy>=1.17,<2
