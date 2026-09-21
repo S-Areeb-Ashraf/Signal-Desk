@@ -1,0 +1,4 @@
+import type { ButtonHTMLAttributes, ReactNode } from "react";
+export function Button({children,variant="primary",...props}:{children:ReactNode;variant?:"primary"|"secondary"|"ghost"|"danger"}&ButtonHTMLAttributes<HTMLButtonElement>){return <button className={`btn btn-${variant}`} {...props}>{children}</button>}
+export function Badge({children,tone="neutral"}:{children:ReactNode;tone?:string}){return <span className={`badge badge-${tone}`}>{children}</span>}
+export function Card({children,className=""}:{children:ReactNode;className?:string}){return <section className={`card ${className}`}>{children}</section>}
