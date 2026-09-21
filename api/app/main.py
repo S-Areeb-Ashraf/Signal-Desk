@@ -1,16 +1,22 @@
 from __future__ import annotations
 import csv, io, re, time, uuid
+import os
 from copy import deepcopy
 from typing import Any
 from urllib.parse import urlparse
 from urllib.robotparser import RobotFileParser
 import httpx
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from api.app.models import DiscoverRequest, DraftRequest, EnrichRequest, ImportRequest, Lead, Model, ScoreRequest, ScoringProfile
+load_dotenv()
 app=FastAPI(title="SignalDesk API",version="0.1.0",docs_url="/api/docs",redoc_url="/api/redoc")
-app.add_middleware(CORSMiddleware,allow_origins=["*"],allow_methods=["*"],allow_headers=["*"])
+frontend_origin=os.getenv("FRONTEND_ORIGIN")
+app.add_middleware(CORSMiddleware,allow_origins=[frontend_origin] if frontend_origin else ["*"],allow_methods=["*"],allow_headers=["*"])
+overpass_url=os.getenv("OVERPASS_URL","https://overpass-api.de/api/interpreter")
+user_agent=os.getenv("USER_AGENT","SignalDesk/0.1 public-business-data")
 _cache: dict[str,tuple[float,list[Lead]]]={}
 DEMO_ROWS=[
  {"company_name":"Northstar Precision Tools","domain":"northstarprecision.com","industry":"Industrial Manufacturing","city":"Cleveland","region":"Ohio","employees":72,"revenue_estimate":12500000,"owner_operated":True,"years_in_business":28,"succession_signal":True,"digital_maturity_gap":True,"email":"hello@northstarprecision.com","phone":"+1 216 555 0101"},
@@ -90,7 +96,7 @@ async def discover(request:DiscoverRequest)->PipelineResponse:
     pattern="|".join(re.escape(term) for term in terms) or re.escape(request.industry)
     query=f'[out:json][timeout:12];area["name"="{city_name}"]["boundary"="administrative"]->.searchArea;nwr["name"~"{pattern}",i](area.searchArea);out center {request.limit};'
     try:
-        async with httpx.AsyncClient(timeout=15,headers={"User-Agent":"SignalDesk/0.1 public-business-data"}) as client: response=await client.post("https://overpass-api.de/api/interpreter",data={"data":query}); response.raise_for_status()
+        async with httpx.AsyncClient(timeout=15,headers={"User-Agent":user_agent}) as client: response=await client.post(overpass_url,data={"data":query}); response.raise_for_status()
     except httpx.HTTPError as exc: raise HTTPException(status_code=502,detail=f"Discovery source unavailable: {exc}") from exc
     try:
         payload=response.json()
@@ -108,7 +114,7 @@ async def enrich(request:EnrichRequest)->PipelineResponse:
     lead=request.lead.model_copy(deep=True)
     if not lead.website:
         lead.validation_flags=sorted(set(lead.validation_flags+["missing_website_for_enrichment"])); lead.validation_status="needs_review"; return PipelineResponse(leads=[lead],warnings=["A public website is required for enrichment."])
-    url=lead.website if lead.website.startswith("http") else f"https://{lead.website}"; parsed=urlparse(url); user_agent="SignalDesk/0.1 public-business-data"
+    url=lead.website if lead.website.startswith("http") else f"https://{lead.website}"; parsed=urlparse(url)
     try:
         async with httpx.AsyncClient(timeout=15,headers={"User-Agent":user_agent},follow_redirects=True) as client:
             robots=await client.get(f"{parsed.scheme}://{parsed.netloc}/robots.txt")
