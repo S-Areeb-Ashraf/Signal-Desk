@@ -1,0 +1,7 @@
+company_name,domain,industry,city,region,country,employees,revenue_estimate,owner_operated,years_in_business,succession_signal,digital_maturity_gap,email,phone
+Northstar Precision Tools,northstarprecision.com,Industrial Manufacturing,Cleveland,Ohio,United States,72,12500000,true,28,true,true,hello@northstarprecision.com,+1 216 555 0101
+Harborline HVAC,harborlinehvac.com,HVAC Services,Tampa,Florida,United States,38,6200000,true,19,false,true,info@harborlinehvac.com,+1 813 555 0102
+Cedar & Finch Dental,cedarfinchdental.com,Dental Practice,Austin,Texas,United States,24,3400000,true,12,true,false,team@cedarfinchdental.com,+1 512 555 0103
+Atlas Safety Supply,atlassafetysupply.com,Industrial Distribution,Phoenix,Arizona,United States,115,28000000,false,22,false,true,sales@atlassafetysupply.com,+1 602 555 0104
+Blue Oak Landscape,blueoaklandscape.com,Landscaping,Denver,Colorado,United States,16,1800000,true,8,false,true,,+1 303 555 0105
+Meridian Compliance Group,meridiancompliance.com,Professional Services,Raleigh,North Carolina,United States,54,9100000,true,16,true,true,contact@meridiancompliance.com,
