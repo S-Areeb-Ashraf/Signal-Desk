@@ -1,0 +1,4 @@
+export type Tier = "A" | "B" | "C" | "D";
+export type Lead = { id:string; company_name:string; domain?:string|null; website?:string|null; industry?:string|null; city?:string|null; region?:string|null; country?:string|null; employees?:number|null; revenue_estimate?:number|null; owner_operated?:boolean|null; years_in_business?:number|null; succession_signal?:boolean|null; digital_maturity_gap?:boolean|null; email?:string|null; phone?:string|null; source:string; validation_status:string; validation_flags:string[]; confidence_score:number; buy_box_score:number; score_tier:Tier; score_reasons:string[]; next_best_action:string; raw_payload?:Record<string,unknown>; };
+export type Profile = { industry:string; geography:string; employee_min:number; employee_max:number; revenue_min:number; revenue_max:number; weights:Record<string,number>; };
+export type PipelineResponse = { leads:Lead[]; changes:{action:string;[key:string]:string}[]; warnings?:string[]; };
