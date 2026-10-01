@@ -41,6 +41,9 @@ class ScoringProfile(Model):
 class ScoreRequest(Model):
     leads: list[Lead] = Field(min_length=1, max_length=10000)
     profile: ScoringProfile
+class VerifyRequest(Model):
+    leads: list[Lead] = Field(min_length=1, max_length=100)
+    profile: ScoringProfile
 class ImportRequest(Model):
     csv_text: str = Field(min_length=1, max_length=5_000_000)
     source: str = "csv_import"
