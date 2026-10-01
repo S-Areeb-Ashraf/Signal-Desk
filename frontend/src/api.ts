@@ -35,6 +35,16 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ leads, profile }),
     }),
+  verify: (leads: Lead[], profile: Profile) =>
+    request<PipelineResponse>("/api/leads/verify", {
+      method: "POST",
+      body: JSON.stringify({ leads, profile }),
+    }),
+  verifyAiReadiness: (leads: Lead[], profile: Profile) =>
+    request<PipelineResponse>("/api/leads/verify-ai-readiness", {
+      method: "POST",
+      body: JSON.stringify({ leads, profile }),
+    }),
   importCsv: (csv_text: string) =>
     request<PipelineResponse>("/api/pipeline/import", {
       method: "POST",
